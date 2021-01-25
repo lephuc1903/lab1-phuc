@@ -1,0 +1,66 @@
+Spark
+Giới thiệu về spark
+Apache Spark là một framework mã nguồn mở tính toán cụm, được phát triển sơ khởi vào năm 2009 bởi AMPLab. Sau này, Spark đã được trao cho Apache Software Foundation vào năm 2013 và được phát triển cho đến nay.
+Tốc độ xử lý của Spark có được do việc tính toán được thực hiện cùng lúc trên nhiều máy khác nhau. Đồng thời việc tính toán được thực hiện ở bộ nhớ trong (in-memories) hay thực hiện hoàn toàn trên RAM.
+Spark cho phép xử lý dữ liệu theo thời gian thực, vừa nhận dữ liệu từ các nguồn khác nhau đồng thời thực hiện ngay việc xử lý trên dữ liệu vừa nhận được ( Spark Streaming).
+Spark không có hệ thống file của riêng mình, nó sử dụng hệ thống file khác như: HDFS, Cassandra, S3,…. Spark hỗ trợ nhiều kiểu định dạng file khác nhau (text, csv, json…) đồng thời nó hoàn toàn không phụ thuộc vào bất cứ một hệ thống file nào.
+Thành phần của Spark
+Apache Spark gồm có 5 thành phần chính : Spark Core, Spark Streaming, Spark SQL, MLlib và GraphX, trong đó:
+•	Spark Core là nền tảng cho các thành phần còn lại và các thành phần này muốn khởi chạy được thì đều phải thông qua Spark Core do Spark Core đảm nhận vai trò thực hiện công việc tính toán và xử lý trong bộ nhớ (In-memory computing) đồng thời nó cũng tham chiếu các dữ liệu được lưu trữ tại các hệ thống lưu trữ bên ngoài.
+•	Spark SQL cung cấp một kiểu data abstraction mới (SchemaRDD) nhằm hỗ trợ cho cả kiểu dữ liệu có cấu trúc (structured data) và dữ liệu nửa cấu trúc (semi-structured data – thường là dữ liệu dữ liệu có cấu trúc nhưng không đồng nhất và cấu trúc của dữ liệu phụ thuộc vào chính nội dung của dữ liệu ấy). Spark SQL hỗ trợ DSL (Domain-specific language) để thực hiện các thao tác trên DataFrames bằng ngôn ngữ Scala, Java hoặc Python và nó cũng hỗ trợ cả ngôn ngữ SQL với giao diện command-line và ODBC/JDBC server.
+•	Spark Streaming được sử dụng để thực hiện việc phân tích stream bằng việc coi stream là các mini-batches và thực hiệc kỹ thuật RDD transformation đối với các dữ liệu mini-batches này. Qua đó cho phép các đoạn code được viết cho xử lý batch có thể được tận dụng lại vào trong việc xử lý stream, làm cho việc phát triển lambda architecture được dễ dàng hơn. Tuy nhiên điều này lại tạo ra độ trễ trong xử lý dữ liệu (độ trễ chính bằng mini-batch duration) và do đó nhiều chuyên gia cho rằng Spark Streaming không thực sự là công cụ xử lý streaming giống như Storm hoặc Flink.
+•	MLlib (Machine Learning Library): MLlib là một nền tảng học máy phân tán bên trên Spark do kiến trúc phân tán dựa trên bộ nhớ. Theo các so sánh benchmark Spark MLlib nhanh hơn 9 lần so với phiên bản chạy trên Hadoop (Apache Mahout).
+•	GrapX: Grapx là nền tảng xử lý đồ thị dựa trên Spark. Nó cung cấp các Api để diễn tảcác tính toán trong đồ thị bằng cách sử dụng Pregel Api.
+Những điểm nổi bật của Spark
+•	Xử lý dữ liệu: Spark xử lý dữ liệu theo lô và thời gian thực
+•	Tính tương thích: Có thể tích hợp với tất cả các nguồn dữ liệu và định dạng tệp được hỗ trợ bởi cụm Hadoop.
+•	Hỗ trợ ngôn ngữ: hỗ trợ Java, Scala, Python và R.
+•	Phân tích thời gian thực:
+o	Apache Spark có thể xử lý dữ liệu thời gian thực tức là dữ liệu đến từ các luồng sự kiện thời gian thực với tốc độ hàng triệu sự kiện mỗi giây. Ví dụ: Data Twitter chẳng hạn hoặc luợt chia sẻ, đăng bài trên Facebook. Sức mạnh Spark là khả năng xử lý luồng trực tiếp hiệu quả.
+o	Apache Spark có thể được sử dụng để xử lý phát hiện gian lận trong khi thực hiện các giao dịch ngân hàng. Đó là bởi vì, tất cả các khoản thanh toán trực tuyến được thực hiện trong thời gian thực và chúng ta cần ngừng giao dịch gian lận trong khi quá trình thanh toán đang diễn ra.
+
+MapPreduce
+Khái niệm 
+MapReduce là mô hình được thiết kế độc quyền bởi Google, nó có khả năng lập trình xử lý các tập dữ liệu lớn song song và phân tán thuật toán trên 1 cụm máy tính. MapReduce trở thành một trong những thành ngữ tổng quát hóa trong thời gian gần đây. MapReduce sẽ  bao gồm những thủ tục sau: thủ tục 1 Map() và 1 Reduce(). Thủ tục Map() bao gồm lọc (filter) và phân loại (sort) trên dữ liệu khi thủ tục khi thủ tục Reduce() thực hiện quá trình tổng hợp dữ liệu. Đây là mô hình dựa vào các khái niệm biển đối của bản đồ và reduce những chức năng lập trình theo hướng chức năng. Thư viện của thủ tục Map() và Reduce() sẽ được viết bằng nhiều loại ngôn ngữ khác nhau. Thủ tục được cài đặt miễn phí và được sử dụng phổ biến nhất là là Apache Hadoop.
+Các hàm chính của MapPreduce
+Mapreduce được ưa chuộng sử dụng như vậy bởi nó sở hữu nhiều ưu điểm vượt trội như sau:
+•	MapReduce có khả năng xử lý dễ dàng mọi bài toán có lượng dữ liệu lớn nhờ khả năng tác vụ phân tích và tính toán phức tạp. Nó có thể xử lý nhanh chóng cho ra kết quả dễ dàng chỉ trong khoảng thời gian ngắn.
+•	Mapreduce có khả năng chạy song song trên các máy có sự phân tán  khác nhau. Với khả năng hoạt động độc lập kết hợp  phân tán, xử lý các lỗi kỹ thuật để mang lại nhiều hiệu quả cho toàn hệ thống. 
+•	MapRedue có khả năng thực hiện trên nhiều nguồn ngôn ngữ lập trình khác nhau như: Java, C/ C++, Python, Perl, Ruby,… tương ứng với nó là những thư viện hỗ trợ. 
+•	Như bạn đã biết, mã độc trên internet ngày càng nhiều hơn nên việc xử lý những đoạn mã độc này cũng trở nên rất phức tạp và tốn kém nhiều thời gian. Chính vì vậy, các ứng dụng MapReduce dần hướng đến quan tâm nhiều hơn cho việc phát hiện các mã độc để có thể xử lý chúng. Nhờ vậy, hệ thống mới có thể vận hành trơn tru và được bảo mật nhất.
+
+Nguyên tắc hoạt động 
+Mapreduce hoạt động dựa vào nguyên tắc chính là “Chia để trị”, như sau:
+•	Phân chia các dữ liệu cần xử lý thành nhiều phần nhỏ trước khi thực hiện. 
+•	Xử lý các vấn đề nhỏ theo phương thức song song trên các máy tính rồi phân tán hoạt động theo hướng độc lập.
+•	Tiến hành tổng hợp những kết quả thu được để đề ra được kết quả sau cùng. 
+Các bước hoạt động của MapReduce
+•	Bước 1: Tiến hành chuẩn bị các dữ liệu đầu vào để cho Map() có thể xử lý.
+•	Bước 2: Lập trình viên thực thi các mã Map() để xử  lý. 
+•	Bước 3: Tiến hành trộn lẫn các dữ liệu được xuất ra bởi Map() vào trong Reduce Processor
+•	Bước 4: Tiến hành thực thi tiếp mã Reduce() để có thể xử lý tiếp các dữ liệu cần thiết.  
+•	Bước 5: Thực hiện tạo các dữ liệu xuất ra cuối cùng. 
+MapReduce được ứng dụng cho việc thống kê hàng loạt những số liệu cụ thể như sau: 
+•	Thực hiện thống kê cho các từ khóa được xuất hiện ở trong các tài liệu, bài viết, văn bản hoặc được cập nhật trên hệ thống fanpage, website,…
+•	Khi số lượng các bài viết đã được thống kê thì tài liệu sẽ có chứa các từ khóa đó. 
+•	Sẽ có thể thống kê được những câu lệnh match, pattern bên trong các tài liệu đó
+•	Khi thống kê được số lượng các URLs có xuất hiện bên trong một webpages. 
+•	Sẽ thống kê được các lượt truy cập của khách hàng sao cho nó có thể tương ứng với các URLs.
+•	Sẽ thống kê được tất cả từ khóa có trên website, hostname,…
+Quy trình thực thi trong hệ thống
+-Phân nhỏ dữ liệu đầu vào
+Thông qua thư viện Mapreduce ứng với từng ngôn ngữ ,chuong trình có nhiệm vụ phân mảnh tệp dữ liệu đầu vào.Dữ liệu vào được chia thành các phần nhỏ   
+
+ 
+    -Sao chép chương trình
+Chương trình mapreduce làm nhiệm vụ sao chép chương trình chạy thành các tiến trình song song lên các máy tính phân tán.Các máy gồm có Master và Worker.Trong đó máy Master làm nhiệm vụ điều phối sự hoạt dộng của quá trình thực hiện Mapreduce trên các máy Worker.Các máy Woker làm nhiệm vụ thực hiên quá trình Map và Reduce với dữ liệu mà nó nhận được
+
+    -Thực hiện hàm Map
+Máy master sẽ phân phối các tác vụ Map và Reduce vào các worker đang rảnh rỗi.Các tác vụ này được Master phân phối cho các máy dựa trên vị trí của dữ liệu liên quan trong hệ thống.Máy Woker khi nhận được tác vụ Map se đọc dữ liệu mà nó được nhận tù phân vùng dữ liệu đã gán cho nó và thực hiện hàm Map.Kết quả đầu ra la các cặp <key,value> trung gian.Các cặp này được lưu tạm trên bộ nhớ đệm của các máy    
+ 
+    -Sau khi thực hiện xong công việc Map .Các máy Worker làm nhiệm vụ chia các giá trị trung gian thành R vúng (tương ứng với R tác vụ Reduce) lưu xuống đĩa và thông báo kết quả ,vị trị lưu cho máy Master        -Thực thi tác vụ Reduce
+    Master sẽ gán các giá trị trung gian và vị trí của các dữ liệu đó cho các máy thực hiện công việc Reduce.Các máy reducer làm nhiệm vụ xử lý sắp xếp các key,thực hiện hàm reduce và đưa ra kết quả cuối
+ -Thông báo kết quả
+Master sẽ kích hoạt thông báo cho chương trình người dùng quá trình mapreduce đã hoàn tất.Kết quả đầu rđược lưu trữ trên R tập tin.
+
+
